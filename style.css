@@ -70,6 +70,7 @@ nav ul li a.join-now {
     width: 700px;
     
 }
+<
 
 .para {
     display: flex;
@@ -207,10 +208,11 @@ nav ul li a.join-now {
 }
 
 .imgbadge{
+
     width: 170px;
     height: 120px;
     margin-bottom: 25px;
-}
+
 
 .imgchange{
     padding: 25px;
