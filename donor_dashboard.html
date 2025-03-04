@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Donor Dashboard</title>
+    <link rel="stylesheet" href="donor_dashboard.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Donor Dashboard</h1>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Available Requests</a></li>
+          <li><a href="#">Profile</a></li>
+          <li><a href="#" id="logout">Logout</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div class="right-column">
+        <section class="filter-section">
+          <h2>Filter Requests</h2>
+          <input
+            type="text"
+            id="location-filter"
+            placeholder="Enter location"
+          />
+          <button id="apply-filter">Apply Filter</button>
+        </section>
+        <section class="requests-list">
+          <h2>Available Requests</h2>
+          <ul id="requests"></ul>
+        </section>
+      </div>
+    </div>
+
+    <script src="donor_dashboard.js"></script>
+  </body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recipient Dashboard</title>
+    <link rel="stylesheet" href="recipient_dashboard.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Recipient Dashboard</h1>
+      <nav>
+        <ul>
+          <li><a href="#">Home</a></li>
+          <li><a href="#">My Requests</a></li>
+          <li><a href="#">Profile</a></li>
+          <li><a href="#" id="logout">Logout</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <div class="container">
+      <div class="left-column">
+        <section class="request-form">
+          <h2>Post a Food Request</h2>
+          <form id="requestForm">
+            <input type="text" id="foodItem" placeholder="Food Item" required />
+            <input
+              type="number"
+              id="quantity"
+              placeholder="Quantity (in servings)"
+              required
+            />
+            <input type="text" id="location" placeholder="Location" required />
+            <input type="datetime-local" id="expiryTime" required />
+            <textarea id="description" placeholder="Description"></textarea>
+            <button type="submit">Post Request</button>
+          </form>
+        </section>
+      </div>
+
+      <div class="right-column">
+        <section class="filter-section">
+          <h2>Filter Requests</h2>
+          <input
+            type="text"
+            id="location-filter"
+            placeholder="Enter location"
+          />
+          <button id="apply-filter">Apply Filter</button>
+        </section>
+        <section class="requests-list">
+          <h2>My Requests</h2>
+          <ul id="requests"></ul>
+        </section>
+      </div>
+    </div>
+
+    <script src="recipient_dashboard.js"></script>
+  </body>
+</html>

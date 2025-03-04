@@ -1,0 +1,154 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #212020
+}
+
+/* Header */
+header {
+    background-color: #ff6f61;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+}
+
+nav ul {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+nav ul li {
+    display: inline;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+}
+
+/* Dashboard Layout */
+.container {
+    display: flex;
+    padding: 20px;
+}
+
+/* Left Column (Request Form) */
+.left-column {
+    flex: 1;
+    padding-right: 20px;
+}
+
+.request-form {
+    background: #E0E0E0;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+/* Right Column (Requests & Filters) */
+.right-column {
+    flex: 1;
+    background: #e0e0e0;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+/* Filter Section */
+.filter-section {
+    background: #E0E0E0;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-section input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.filter-section button {
+    padding: 8px 12px;
+    background-color: #ff6f61;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.filter-section button:hover {
+    background-color: #ff6f61;
+}
+
+/* Requests List */
+.requests-list ul {
+    list-style: none;
+    padding: 0;
+}
+
+.requests-list li {
+    background: #E0E0E0;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+}
+
+button {
+    background-color: #ff6f61;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #ff6f61;
+}
+
+/* Expiry Time Field */
+#expiryTime {
+    width: 100%;
+    padding: 8px;
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    background: #E0E0E0;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Requests List with Expiry */
+.requests-list li {
+    background: #E0E0E0;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    position: relative;
+}
+
+.requests-list li.expired {
+    opacity: 0.5;
+    text-decoration: line-through;
+}
+
+.expiry-time {
+    font-size: 14px;
+    color: red;
+    font-weight: bold;
+}
