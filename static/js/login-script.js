@@ -1,51 +1,34 @@
-let currentRole = 'donor'; // Default role
-
+// Function to switch role in login form
 function switchRole(role) {
-    const slider = document.querySelector('.slider');
-    const buttons = document.querySelectorAll('.switcher button');
+    // Capitalized version for display
+    const capitalizedRole = role.charAt(0).toUpperCase() + role.slice(1);
+  
+    // Update visible text for slider and heading
+    document.getElementById("slider-role").innerText = capitalizedRole;
+    document.getElementById("role-sign-in").innerText = capitalizedRole;
+  
+    // Update hidden input that gets submitted with the form
+    document.getElementById("hidden-signin-role").value = role;
+  
+    // Update active button styles
+    const buttons = document.querySelectorAll(".switcher button");
+    buttons.forEach(btn => btn.classList.remove("active"));
     
-    if (role === 'donor') {
-        slider.style.transform = 'translateX(0)';
-        buttons[0].classList.add('active');
-        buttons[1].classList.remove('active');
-        currentRole = 'donor';
+    if (role === "donor") {
+      buttons[0].classList.add("active");
     } else {
-        slider.style.transform = 'translateX(100%)';
-        buttons[1].classList.add('active');
-        buttons[0].classList.remove('active');
-        currentRole = 'recipient';
+      buttons[1].classList.add("active");
     }
-
-    document.getElementById('role-sign-in').textContent = capitalizeFirstLetter(currentRole);
-    document.getElementById('role-sign-up').textContent = capitalizeFirstLetter(currentRole);
-    document.getElementById('slider-role').textContent = capitalizeFirstLetter(currentRole);
-}
-
-function switchForm(formType) {
-    const signInForm = document.getElementById('sign-in-form');
-    const signUpForm = document.getElementById('sign-up-form');
-    const signInButton = document.querySelector('.sign-in');
-    const signUpButton = document.querySelector('.sign-up');
-
-    if (formType === 'sign-in') {
-        signInForm.classList.add('active');
-        signUpForm.classList.remove('active');
-        signInButton.style.background = '#ff6f61';
-        signUpButton.style.background = '#ff6f61';
-    } else {
-        signUpForm.classList.add('active');
-        signInForm.classList.remove('active');
-        signUpButton.style.background = '#ff6f61';
-        signInButton.style.background = '#ff6f61';
+  
+    // Optional: Animate slider position (if styled using CSS)
+    const slider = document.querySelector(".slider");
+    if (slider) {
+      slider.style.left = role === "donor" ? "0" : "50%"; // Adjust based on layout
     }
-}
-
-function capitalizeFirstLetter(string) {
-    return string.charAt(0).toUpperCase() + string.slice(1);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    switchRole('donor');
-});
-
-
+  }
+  
+  // On page load, default role is donor
+  document.addEventListener("DOMContentLoaded", () => {
+    switchRole("donor"); // Ensure default state is consistent
+  });
+  

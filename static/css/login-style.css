@@ -142,7 +142,7 @@ body {
     justify-content: center;
     align-items: center;
     background: #f0f0f0;
-    background-image: url("../images/login-img.avif");
+    background-image: url("/static/images/login-img.avif");
     background-size: cover;
     background-repeat: no-repeat;
 }
@@ -156,3 +156,4 @@ body {
     align-items: center;
     border-radius: 10px;
 }
+
