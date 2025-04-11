@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
-  fetch("http://127.0.0.1:5000/api/my_requests")
+  fetch("/api/my_requests")
     .then(response => {
       if (!response.ok) throw new Error("Network error");
       return response.json();
