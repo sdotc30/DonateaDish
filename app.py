@@ -195,6 +195,31 @@ def get_all_requests():
         })
     return jsonify(data)
 
+@app.route('/profile')
+@login_required
+def profile():
+    return render_template('profile.html')
+
+@app.route('/api/profile_data')
+@login_required
+def profile_data():
+    if current_user.role != 'donor':
+        return jsonify({"error": "Unauthorized access"}), 403
+    
+    # Fetching a single user
+    user_data = Users.query.filter_by(id=current_user.id).first()
+
+    if user_data is None:
+        return jsonify({"error": "User not found"}), 404
+    
+    # Returning the data as a single object
+    userd = {
+        "Name": user_data.email.split('@')[0],
+        "email": user_data.email,
+        "role": user_data.role
+    }
+
+    return jsonify(userd)
 
 
 

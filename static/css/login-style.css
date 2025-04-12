@@ -157,3 +157,26 @@ body {
     border-radius: 10px;
 }
 
+.flash {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-weight: bold;
+    text-align: center;
+  }
+  
+  .flash.primary {
+    background-color: #cce5ff;
+    color: #004085;
+  }
+  
+  .flash.danger {
+    background-color: #f8d7da;
+    color: #721c24;
+  }
+  
+  .flash.warning {
+    background-color: #fff3cd;
+    color: #856404;
+  }
+  
