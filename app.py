@@ -267,43 +267,41 @@ def signup():
     return render_template('signup.html')
 
 
-@app.route('/login', methods=['POST', 'GET'])
+from flask_login import current_user
+
+@app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == "POST":
-        email = request.form.get('email')
-        password = request.form.get('password')
-        selected_role = request.form.get('role')
+    # ✅ If already logged in, redirect based on role
+    if current_user.is_authenticated:
+        role = session.get('role')
+        if role == 'donor':
+            return redirect(url_for('donor_dashboard'))
+        elif role == 'recipient':
+            return redirect(url_for('recipient_dashboard'))
 
-        # Debugging: Log form data
-        logging.debug(f"Form data: {request.form}")
+    if request.method == 'POST':
+        email = request.form['email']
+        password = request.form['password']
+        role = request.form['role']
 
-        # Validate form data
-        if not email or not password or not selected_role:
-            flash("All fields are required.", "danger")
-            return render_template('login.html')
+        user = Users.query.filter_by(email=email, role=role).first()
 
-        # Check if user exists
-        user = Users.query.filter_by(email=email).first()
         if user and check_password_hash(user.password, password):
-            if user.role != selected_role:
-                flash("Incorrect role selected. Please choose the correct role.", "danger")
-                return redirect(url_for('login'))
-
-            # Log the user in
             login_user(user)
             session['role'] = user.role
-            flash("Login Success", "primary")
+            flash('Login successful!', 'success')
 
-            # Redirect based on role
-            if user.role == "donor":
+            if role == 'donor':
                 return redirect(url_for('donor_dashboard'))
-            elif user.role == "recipient":
+            elif role == 'recipient':
                 return redirect(url_for('recipient_dashboard'))
         else:
-            flash("Invalid credentials", "warning")
-            return render_template('login.html')
+            flash('Invalid credentials. Please try again.', 'danger')
+            return redirect(url_for('login'))
 
     return render_template('login.html')
+
+
 
 @app.route('/logout')
 @login_required

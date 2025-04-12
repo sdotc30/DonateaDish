@@ -3,7 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #212020
+    background-color: #212020;
 }
 
 /* Header */
@@ -35,42 +35,66 @@ nav ul li a {
 
 /* Dashboard Layout */
 .container {
-    display: flex;
+    display: block;
     padding: 20px;
 }
 
-/* Left Column (Request Form) */
-.left-column {
-    flex: 1;
-    padding-right: 20px;
-}
-
+/* Request Form */
 .request-form {
-    background: #E0E0E0;
+    background: #e0e0e0;
     padding: 20px;
+    margin-top: 40px; /* Added top padding */
     margin-bottom: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
+    max-width: 900px; /* Increased width */
+    margin-left: auto;
+    margin-right: auto;
 }
 
-/* Right Column (Requests & Filters) */
-.right-column {
-    flex: 1;
-    background: #e0e0e0;
-    padding: 20px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.request-form input,
+.request-form textarea {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
     border-radius: 5px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    resize: none;
+}
+
+.request-form textarea {
+    min-height: 100px;
+}
+
+.request-form button {
+    background-color: #ff6f61;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    border-radius: 5px;
+}
+
+.request-form button:hover {
+    background-color: #e85b50;
 }
 
 /* Filter Section */
 .filter-section {
-    background: #E0E0E0;
+    background: #e0e0e0;
     padding: 15px;
+    margin-top: 40px; /* Added top padding */
     margin-bottom: 20px;
     border-radius: 5px;
     display: flex;
     align-items: center;
     gap: 10px;
+    max-width: 900px; /* Increased width */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .filter-section input {
@@ -90,51 +114,27 @@ nav ul li a {
 }
 
 .filter-section button:hover {
-    background-color: #ff6f61;
+    background-color: #e85b50;
 }
 
 /* Requests List */
+.requests-list {
+    max-width: 900px; /* Increased width */
+    margin-top: 40px; /* Added top padding */
+    margin-left: auto;
+    margin-right: auto;
+    background: #e0e0e0;
+    padding: 15px;
+    border-radius: 5px;
+}
+
 .requests-list ul {
     list-style: none;
     padding: 0;
 }
 
 .requests-list li {
-    background: #E0E0E0;
-    padding: 10px;
-    margin-bottom: 10px;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-}
-
-button {
-    background-color: #ff6f61;
-    color: white;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
-    width: 100%;
-    margin-top: 10px;
-}
-
-button:hover {
-    background-color: #ff6f61;
-}
-
-/* Expiry Time Field */
-#expiryTime {
-    width: 100%;
-    padding: 8px;
-    margin-top: 10px;
-    border: 1px solid #ccc;
-    background: #E0E0E0;
-    border-radius: 5px;
-    font-size: 16px;
-}
-
-/* Requests List with Expiry */
-.requests-list li {
-    background: #E0E0E0;
+    background: #e0e0e0;
     padding: 10px;
     margin-bottom: 10px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
@@ -153,38 +153,40 @@ button:hover {
     font-weight: bold;
 }
 
-
+/* Cards */
 .card-container {
+    padding-top: 10px;
     display: flex;
     flex-wrap: wrap;
-    gap: 1rem;
-  }
-  
-  .card {
+    gap: 3.5rem; /* Increase the gap value to add more space */
+    justify-content: center;
+}
+
+.card {
     background-color: white;
     border: 1px solid #ffffff;
     border-radius: 8px;
     padding: 1rem;
     width: 300px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  }
-  
-  .card h3 {
+}
+
+.card h3 {
     margin-top: 0;
     font-size: 1.2rem;
     color: #2c3e50;
-  }
-  
-  .card .price-stock {
+}
+
+.card .price-stock {
     font-weight: bold;
     margin: 0.5rem 0;
-  }
-  
-  .card p {
+}
+
+.card p {
     margin: 0.3rem 0;
-  }
-  
-  .card button {
+}
+
+.card button {
     margin-top: 0.5rem;
     padding: 0.4rem 1rem;
     background-color: #ff6f61;
@@ -192,9 +194,10 @@ button:hover {
     border: none;
     border-radius: 4px;
     cursor: pointer;
-  }
+}
 
-  .edit-btn, .remove-btn {
+.edit-btn,
+.remove-btn {
     background-color: #3498db;
     color: white;
     border: none;
@@ -202,10 +205,12 @@ button:hover {
     border-radius: 4px;
     cursor: pointer;
     margin-right: 0.5rem;
-  }
-  
-  .remove-btn {
+}
+
+.remove-btn {
     background-color: #c0392b;
-  }
-  
-  
+}
+
+body {
+    padding-bottom: 40px; /* Adjust value as needed */
+}
