@@ -214,3 +214,16 @@ nav ul li a {
 body {
     padding-bottom: 40px; /* Adjust value as needed */
 }
+
+/* Responsive Layout for Filter Section on Small Screens */
+@media (max-width: 600px) {
+    .filter-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .filter-section input,
+    .filter-section button {
+        width: 100%;
+    }
+}
