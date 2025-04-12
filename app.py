@@ -23,7 +23,7 @@ AIVEN_DB = os.getenv("AIVEN_DB")
 
 # Validate environment variables
 if not all([AIVEN_USER, AIVEN_PASSWORD, AIVEN_HOST, AIVEN_PORT, AIVEN_DB]):
-    raise ValueError("❌ Missing one or more database credentials in .env file.")
+    raise ValueError("Missing one or more database credentials in .env file.")
 
 
 # After initializing Flask app
@@ -34,7 +34,7 @@ CORS(app)  # This enables CORS for all routes
 # Configure secret key
 app.secret_key = os.getenv("SECRET_KEY")
 if not app.secret_key:
-    raise ValueError("❌ SECRET_KEY is missing in the .env file.")
+    raise ValueError("SECRET_KEY is missing in the .env file.")
 
 # Configure SQLAlchemy database URI
 app.config[
@@ -122,7 +122,7 @@ def recipient_dashboard():
             flash("✅ Request posted successfully!", "success")
         except Exception as e:
             db.session.rollback()
-            flash("❌ Could not post request. Try again later.", "danger")
+            flash("Could not post request. Try again later.", "danger")
             logging.error(f"DB Error: {str(e)}")
 
         return redirect(url_for('recipient_dashboard'))

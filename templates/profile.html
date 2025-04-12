@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Profile Page</title>
     <link rel="stylesheet" href="{{url_for('static',filename='css/profile.css')}}" />
+    <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}" type="image/x-icon">
   </head>
   <body>
     <header>
@@ -12,7 +13,6 @@
       <nav>
         <ul class="profile-dashboard">
           <li><a href="{{url_for('donor_dashboard')}}">Dashboard</a></li>
-          <li><a href="{{url_for('profile')}}">Profile</a></li>
           <li><a href="{{url_for('logout')}}" id="logout">Logout</a></li>
         </ul>
       </nav>
