@@ -280,6 +280,14 @@ def login():
 
     return render_template('login.html')
 
+@app.route('/logout')
+@login_required
+def logout():
+    logout_user()
+    session.clear()  # optional
+    flash("You have been logged out.", "success")
+    return redirect(url_for('login'))
+
 
 @app.route('/test-db')
 def test_db():
