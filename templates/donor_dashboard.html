@@ -26,10 +26,11 @@
           <h2 style="color: black;">Filter Requests</h2>
           <input
             type="text"
-            id="location-filter"
+            id="filter-location"
             placeholder="Enter location"
-          />
-          <button id="apply-filter">Apply Filter</button>
+          /> 
+          <button onclick="applyFilter()">Apply Filter</button>
+          <button onclick="resetFilter()">Reset</button>
         </section>
 
         <section class="requests-list">

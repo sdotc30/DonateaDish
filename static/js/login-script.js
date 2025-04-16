@@ -2,6 +2,7 @@ function switchRole(role) {
   // Capitalized version for display
   const capitalizedRole = role.charAt(0).toUpperCase() + role.slice(1);
 
+
   // Update visible text for slider and heading
   document.getElementById("slider-role").innerText = capitalizedRole;
   document.getElementById("role-sign-in").innerText = capitalizedRole;

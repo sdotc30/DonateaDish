@@ -1,4 +1,7 @@
 /* General Styles */
+html, body{
+  overflow-x: hidden;
+}
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -67,6 +70,23 @@ nav ul li a {
   flex: 1 1 100%;
   font-size: 16px;
 }
+
+.filter-section input, select {
+  display: block;
+  width: 32.5%;
+  background-color: white;
+  padding: 10px;
+  margin-bottom: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  resize: none;
+  display: inline-grid;
+}
+.filter-section select:required:invalid {
+  color: rgb(101, 101, 101);
+}
+
 
 .filter-section input {
   padding: 8px;
@@ -140,6 +160,7 @@ button:hover {
 
 .request-card:hover {
   transform: scale(1.02);
+  transform: translateY(-5px);
 }
 
 .request-card h3 {
@@ -203,7 +224,7 @@ button:hover {
   }
 
   nav ul {
-    flex-direction: column;
+    flex-direction: row;
     gap: 10px;
   }
 
@@ -233,16 +254,21 @@ button:hover {
 @media screen and (max-width: 480px) {
   header {
     font-size: 16px;
+    box-sizing: border-box;
   }
-
+  nav ul{
+    margin-bottom: 5px;
+  }
   nav ul li a {
     font-size: 14px;
   }
 
   .filter-section input,
   .filter-section button,
+  .filter-section select,
   .accept-btn,
   .map-link {
+    width: 100%;
     font-size: 14px;
   }
 
@@ -265,4 +291,11 @@ button:hover {
   .request-card {
     padding: 1rem;
   }
+}
+
+.filter-section button:hover {
+  background-color: #e85b50;
+  transform: scale(1.02);
+  transition: transform 0.2s ease-in-out;
+  color: white;
 }

@@ -80,6 +80,17 @@ class Users(UserMixin, db.Model):
     password = db.Column(db.String(1000), nullable=False)  # Hashed password
     role = db.Column(db.String(20), nullable=False)  # "donor" or "recipient"
 
+class DonationStatus(db.Model):
+    __tablename__ = 'donation_status'
+    status_id = db.Column(db.Integer, primary_key=True)
+    # Foreign key to the donation request (rid from Recipient table)
+    rid = db.Column(db.Integer, db.ForeignKey('recipient.rid'), nullable=False)
+    # Foreign key to the donor (user_id from Users table)
+    donor_id = db.Column(db.Integer, db.ForeignKey('users.id'), nullable=False)
+    # Status values: "Acknowledgement Pending", "Donation Accepted", "Donation Ongoing"
+    status = db.Column(db.String(50), nullable=False, default="Donation Request Listed") 
+
+
 
 # Routes
 
@@ -181,8 +192,19 @@ def edit_request(request_id):
 def get_all_requests():
     if current_user.role != 'donor':
         return jsonify({"error": "Unauthorized access"}), 403
+    
 
-    all_requests = Recipient.query.all()
+    location_query = request.args.get('location')
+    gender_query = request.args.get('gender')
+    age_group_query = request.args.get('age_group')
+    size_query = request.args.get('size')
+
+    query = Recipient.query
+
+    if location_query:
+        query = query.filter(Recipient.location.ilike(f"%{location_query}%"))
+
+    all_requests = query.all()
     data = []
     for req in all_requests:
         data.append({
@@ -194,6 +216,7 @@ def get_all_requests():
             "desc": req.description
         })
     return jsonify(data)
+
 
 @app.route('/profile')
 @login_required
@@ -221,6 +244,175 @@ def profile_data():
 
     return jsonify(userd)
 
+@app.route('/api/status/create', methods=["POST"])
+@login_required
+def create_status():
+    if current_user.role != "donor":
+        return jsonify({"error": "Only donors can create status"}), 403
+
+    data = request.get_json()
+    rid = data.get("rid")
+
+    if not rid:
+        return jsonify({"error": "Recipient request ID is required"}), 400
+
+    # Check if status already exists for this donor and request
+    existing = DonationStatus.query.filter_by(rid=rid, donor_id=current_user.id).first()
+    if existing:
+        return jsonify({"error": "Status already exists"}), 400
+
+    new_status = DonationStatus(
+        rid=rid,
+        donor_id=current_user.id,
+        status="Acknowledgement Pending"
+    )
+
+    try:
+        db.session.add(new_status)
+        db.session.commit()
+        return jsonify({"message": "Status created successfully"}), 201
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error creating status: {str(e)}")
+        return jsonify({"error": "Database error"}), 500
+
+@app.route('/api/status', methods=["GET"])
+@login_required
+def get_statuses():
+    if current_user.role == "recipient":
+        # Join with Recipient to filter by recipient's user_id
+        statuses = db.session.query(DonationStatus, Recipient).join(Recipient).filter(
+            Recipient.user_id == current_user.id
+        ).all()
+
+    elif current_user.role == "donor":
+        statuses = db.session.query(DonationStatus, Recipient).join(Recipient).filter(
+            DonationStatus.donor_id == current_user.id
+        ).all()
+    else:
+        return jsonify({"error": "Unauthorized role"}), 403
+
+    result = []
+    for status, req in statuses:
+        result.append({
+            "status_id": status.status_id,
+            "rid": status.rid,
+            "donor_id": status.donor_id,
+            "status": status.status,
+            "food_item": req.food_item,
+            "quantity": req.quantity,
+            "location": req.location
+        })
+    return jsonify(result), 200
+
+@app.route('/api/status/update/<int:status_id>', methods=["PUT"])
+@login_required
+def update_status(status_id):
+    status_entry = db.session.get(DonationStatus, status_id)
+    if not status_entry:
+        return jsonify({"error": "Status not found"}), 404
+
+    data = request.get_json()
+    new_status = data.get("status")
+
+    if not new_status:
+        return jsonify({"error": "Status is required"}), 400
+
+    recipient_req = Recipient.query.get(status_entry.rid)
+
+    if current_user.role == "recipient":
+        # Recipient can only update to "Donation Accepted"
+        if recipient_req.user_id != current_user.id:
+            return jsonify({"error": "Unauthorized recipient"}), 403
+        if new_status != "Donation Accepted":
+            return jsonify({"error": "Recipients can only acknowledge"}), 403
+
+    elif current_user.role == "donor":
+        # Donor can update to "Donation Ongoing" only *after* recipient has acknowledged
+        if status_entry.donor_id != current_user.id:
+            return jsonify({"error": "Unauthorized donor"}), 403
+
+        if new_status == "Donation Ongoing" and status_entry.status != "Donation Accepted":
+            return jsonify({"error": "Donation must be acknowledged first"}), 400
+
+        # Donor can't set to "Donation Accepted"
+        if new_status == "Donation Accepted":
+            return jsonify({"error": "Donors cannot set this status"}), 403
+
+    else:
+        return jsonify({"error": "Unauthorized role"}), 403
+
+    # Update and save
+    status_entry.status = new_status
+    try:
+        db.session.commit()
+        return jsonify({"message": f"Status updated to '{new_status}'"}), 200
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error updating status: {str(e)}")
+        return jsonify({"error": "Database error"}), 500
+
+@app.route('/api/status/delete/<int:status_id>', methods=["DELETE"])
+@login_required
+def delete_status(status_id):
+    status_entry = DonationStatus.query.get(status_id)
+
+    if not status_entry or status_entry.donor_id != current_user.id:
+        return jsonify({"error": "Unauthorized or not found"}), 403
+
+    try:
+        db.session.delete(status_entry)
+        db.session.commit()
+        return jsonify({"message": "Donation status canceled"}), 200
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error deleting status: {str(e)}")
+        return jsonify({"error": "Database error"}), 500
+
+@app.route('/api/acknowledge_donation/<int:rid>', methods=["PUT"])
+@login_required
+def acknowledge_donation(rid):
+    if current_user.role != "recipient":
+        return jsonify({"error": "Only recipients can acknowledge donations"}), 403
+
+    # Check if the recipient actually made this request
+    request_entry = Recipient.query.filter_by(rid=rid, user_id=current_user.id).first()
+    if not request_entry:
+        return jsonify({"error": "Request not found or unauthorized"}), 404
+
+    # Find the corresponding DonationStatus
+    status_entry = DonationStatus.query.filter_by(rid=rid).first()
+    if not status_entry:
+        return jsonify({"error": "Donation status not found"}), 404
+
+    # Only allow acknowledgement if status is "Acknowledgement Pending"
+    if status_entry.status != "Acknowledgement Pending":
+        return jsonify({"error": "Cannot acknowledge donation at this stage"}), 400
+
+    status_entry.status = "Donation Ongoing"
+    try:
+        db.session.commit()
+        return jsonify({"message": "Acknowledged successfully"}), 200
+    except Exception as e:
+        db.session.rollback()
+        logging.error(f"Error acknowledging donation: {str(e)}")
+        return jsonify({"error": "Database error"}), 500
+    
+@app.route('/api/status/<int:rid>', methods=["GET"])
+@login_required
+def get_status_by_rid(rid):
+    """Get donation status for a specific request ID"""
+    status_entry = DonationStatus.query.filter_by(rid=rid).first()
+    
+    if status_entry:
+        return jsonify({
+            "status": status_entry.status,
+            "donor_id": status_entry.donor_id
+        }), 200
+    else:
+        return jsonify({
+            "status": "Donation Request Listed"
+        }), 200
 
 
 @app.route('/signup', methods=['POST', 'GET'])
