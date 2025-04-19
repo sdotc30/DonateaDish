@@ -195,9 +195,6 @@ def get_all_requests():
     
 
     location_query = request.args.get('location')
-    gender_query = request.args.get('gender')
-    age_group_query = request.args.get('age_group')
-    size_query = request.args.get('size')
 
     query = Recipient.query
 
@@ -352,12 +349,12 @@ def update_status(status_id):
         logging.error(f"Error updating status: {str(e)}")
         return jsonify({"error": "Database error"}), 500
 
-@app.route('/api/status/delete/<int:status_id>', methods=["DELETE"])
+@app.route('/api/status/delete/<int:rid>', methods=["DELETE"])
 @login_required
-def delete_status(status_id):
-    status_entry = DonationStatus.query.get(status_id)
+def delete_status(rid):
+    status_entry = DonationStatus.query.filter_by(rid=rid, donor_id=current_user.id).first()
 
-    if not status_entry or status_entry.donor_id != current_user.id:
+    if not status_entry:
         return jsonify({"error": "Unauthorized or not found"}), 403
 
     try:
