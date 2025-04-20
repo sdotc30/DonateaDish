@@ -19,14 +19,23 @@ document.addEventListener("DOMContentLoaded", () => {
         card.classList.add("card");
 
         const status = statusMap[item.id] || "Donation Request Listed";
+        let statusClass = "";
+if (status === "Donation Request Listed") {
+  statusClass = "blue-status";
+} else if (status === "Acknowledgement Pending") {
+  statusClass = "yellow-status";
+} else if (status === "Ongoing") {
+  statusClass = "green-status";
+}
+
 
         card.innerHTML = `
           <h3>${item.food_item.toUpperCase()}</h3>
           <p><strong>Quantity (in numbers):</strong> <span class="editable" data-field="quantity">${item.quantity}</span></p>
           <p><strong>Location:</strong> <span class="editable" data-field="location">${item.location}</span></p>
-          <p><strong>Expiry:</strong> <span class="editable" data-field="expiry_time">${item.expiry_time}</span></p>
+          <p><strong>Expiry:</strong> <span class = "expiry-time" data-field="expiry_time">${item.expiry_time}</span></p>
           <p><strong>Description:</strong> <span class="editable" data-field="desc">${item.desc || "No description provided."}</span></p>
-          <p><strong>Status:</strong> <span class="donation-status">${status}</span></p>
+          <p><strong>Status:</strong> <span class="donation-status ${statusClass}" >${status}</span></p>
         `;
 
         const editBtn = document.createElement("button");
@@ -42,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Acknowledge button (for recipient to mark Ongoing)
         if (status === "Acknowledgement Pending") {
-          const acknowledgeBtn = document.createElement("button");
+          const acknowledgeBtn = document.createElement("button");  
           acknowledgeBtn.textContent = "Acknowledge Donation";
           acknowledgeBtn.classList.add("acknowledge-btn");
       

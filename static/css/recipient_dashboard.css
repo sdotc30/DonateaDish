@@ -282,3 +282,18 @@ body {
     }
   }
   
+  .blue-status {
+    color: blue;
+    font-weight: bold;
+  }
+  
+  .yellow-status {
+    color: orange;
+    font-weight: bold;
+  }
+  
+  .green-status {
+    color: green;
+    font-weight: bold;
+  }
+  
