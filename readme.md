@@ -48,7 +48,16 @@ Database: MySQL (Aiven Cloud)
 
 ## Screenshots
 
-> Coming soon -> UI screenshots of login, dashboards, food listings, and donation status tracking!
+## Screenshots
+
+### 1. Landing Page
+![Food Request Form](screenshots/landing.png)
+
+### 2. Login Page
+![Login Page](screenshots/login.png)
+
+### 3. Donor Dashboard
+![Donor Dashboard](screenshots/Donor_dashboard.png)
 
 ---
 
