@@ -48,8 +48,6 @@ Database: MySQL (Aiven Cloud)
 
 ## Screenshots
 
-## Screenshots
-
 ### 1. Landing Page
 ![Food Request Form](screenshots/landing.png)
 
