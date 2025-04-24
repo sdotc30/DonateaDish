@@ -1,4 +1,4 @@
-# DonateADish â€” Food Donation Made Seamless
+# DonateADish -> Food Donation Made Seamless
 
 **Website**: [donateadish.onrender.com](http://donateadish.onrender.com)
 
@@ -35,7 +35,7 @@ Our platform allows:
 ## System Architecture
 
 ```
-Donor / NGO (User)
+Donor / Recipient
       |
 Frontend: HTML + CSS + JS
       |
@@ -48,7 +48,7 @@ Database: MySQL (Aiven Cloud)
 
 ## Screenshots
 
-> Coming soon â€“ UI screenshots of login, dashboards, food listings, and donation status tracking!
+> Coming soon -> UI screenshots of login, dashboards, food listings, and donation status tracking!
 
 ---
 
@@ -84,15 +84,9 @@ Check it out: [donateadish.onrender.com](http://donateadish.onrender.com)
 
 ## Want to Contribute?
 
-Weâ€™d love your help! Coming soon:
+We'd love your help! Coming soon:
 - AI Matching Engine
 - Enhanced Analytics for NGOs
 - Native mobile app
 
 **Star the repo, fork it, and letâ€™s reduce food waste together!**
-
----
-
-## License
-
-MIT License
