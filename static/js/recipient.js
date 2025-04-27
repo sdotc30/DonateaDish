@@ -24,7 +24,7 @@ if (status === "Donation Request Listed") {
   statusClass = "blue-status";
 } else if (status === "Acknowledgement Pending") {
   statusClass = "yellow-status";
-} else if (status === "Ongoing") {
+} else if (status === "Donation Ongoing") {
   statusClass = "green-status";
 }
 
@@ -66,6 +66,8 @@ if (status === "Donation Request Listed") {
                   if (data.message === "Acknowledged successfully") {
                       acknowledgeBtn.remove();
                       card.querySelector(".donation-status").textContent = "Ongoing";
+                      alert("Donation Acknowledged Successfully!")
+                      location.reload();
                   } else {
                       alert(data.error || "Failed to acknowledge donation.");
                   }
@@ -78,12 +80,49 @@ if (status === "Donation Request Listed") {
       
 
         // Disable editing/removing if status is beyond initial listing
-        if (status !== "Donation Request Listed") {
-          editBtn.style.display = "none";
-          removeBtn.style.display = "none";
-        }
+        if (status !== "Donation Request Listed" && status !="Acknowledgement Pending") {
+          const markcomplete = document.createElement("button");
+          markcomplete.textContent = "Mark as Completed";
+          markcomplete.classList.add("acknowledge-btn");
+      
+          markcomplete.addEventListener("click", () => {
+              fetch(`/api/markcomplete/${item.id}`, {   // Notice here: PATCH URL corrected
+                  method: "PATCH",
+                  headers: { "Content-Type": "application/json" },
+              })
+              .then(res => res.json())
+              .then(data => {
+                  if (data.success) {
+                      // ✅ Successfully marked complete
+      
+                      // Option 1: Reload the page to refresh everything
+                      location.reload();
+      
+                      // OR Option 2 (better experience): Just remove this card
+                      // card.remove();
+                  } else {
+                      // ❌ Some error occurred
+                      alert(data.error || "Something went wrong!");
+                  }
+              })
+              .catch(error => {
+                  console.error("Error marking as completed:", error);
+                  alert("Something went wrong!");
+              });
+          });
+      
+          card.appendChild(markcomplete);
+      }
 
-        container.appendChild(card);
+      if (status !== "Donation Request Listed") {
+        editBtn.style.display = "none";
+        removeBtn.style.display = "none";
+      }
+      
+      card.appendChild(editBtn);
+      card.appendChild(removeBtn);
+
+      container.appendChild(card);
 
         // REMOVE handler
         removeBtn.addEventListener("click", () => {
