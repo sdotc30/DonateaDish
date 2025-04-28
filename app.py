@@ -188,9 +188,25 @@ def get_my_requests():
 def delete_request(request_id):
     req = Recipient.query.get(request_id)
     if req and req.user_id == current_user.id:
-        db.session.delete(req)
-        db.session.commit()
-        return jsonify({"message": "Deleted"}), 200
+        try:
+            # First delete related records in DonationStatus if they exist
+            status_entries = DonationStatus.query.filter_by(rid=request_id).all()
+            for status in status_entries:
+                db.session.delete(status)
+            
+            # Then delete related records in DonorDetails if they exist
+            donor_details = DonorDetails.query.filter_by(rid=request_id).all()
+            for detail in donor_details:
+                db.session.delete(detail)
+            
+            # Finally delete the main record
+            db.session.delete(req)
+            db.session.commit()
+            return jsonify({"message": "Deleted"}), 200
+        except Exception as e:
+            db.session.rollback()
+            logging.error(f"Error deleting request: {str(e)}")
+            return jsonify({"error": "Database error"}), 500
     return jsonify({"error": "Unauthorized"}), 403
 
 
