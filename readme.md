@@ -96,4 +96,4 @@ We'd love your help! Coming soon:
 - Enhanced Analytics for NGOs
 - Native mobile app
 
-**Star the repo, fork it, and letâ€™s reduce food waste together!**
+**Star the repo, fork it, and let's reduce food waste together!**
