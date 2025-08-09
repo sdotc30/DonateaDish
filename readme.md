@@ -8,7 +8,7 @@
 
 ## About the Project
 
-**DonateADish** is a web-based platform that bridges the gap between food donors and NGOs serving underprivileged communities. Whether it's leftover food from events or surplus stock from restaurants, we help ensure it reaches people in need instead of a landfill**.
+**DonateADish** is a web-based platform that bridges the gap between food donors and NGOs serving underprivileged communities. Whether it's leftover food from events or surplus stock from restaurants, we help ensure it reaches people in need instead of a **landfill**.
 
 ### Why DonateADish?
 
