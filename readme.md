@@ -24,11 +24,11 @@ Our platform allows:
 ## Key Features
 
 - **Secure Authentication** with role-based access for Donors & Recipients
-- **Food Request Listings** â€“ NGOs can post specific needs; donors can browse and contribute
-- **Donation Tracking System** â€“ Real-time updates on donation status: Acknowledgement Pending, Accepted, Ongoing
-- **Social Gamification** â€“ Earn badges and share your good deeds online!
-- **Location-Aware Search** â€“ Filter food requests by location
-- **Tech Stack Power** â€“ Flask, HTML/CSS/JavaScript, MySQL (via Aiven Cloud)
+- **Food Request Listings** - NGOs can post specific needs; donors can browse and contribute
+- **Donation Tracking System** - Real-time updates on donation status: Acknowledgement Pending, Accepted, Ongoing
+- **Social Gamification** - Earn badges and share your good deeds online!
+- **Location-Aware Search** - Filter food requests by location
+- **Tech Stack Power** - Flask, HTML/CSS/JavaScript, MySQL (via Aiven Cloud)
 
 ---
 
@@ -71,7 +71,7 @@ Database: MySQL (Aiven Cloud)
 ## Aligned With United Nations SDGs
 
 - **SDG 2: Zero Hunger**
-- **SDG 3: Good Health and Wellbeing**
+- **SDG 3: Good Health and Well-being**
 - **SDG 17: Partnerships for the Goals**
 
 ---
